@@ -13,6 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -162,19 +166,22 @@ public class supermercado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       String []token=jTextField1.getText().split(" ");
+        String[] token = jTextField1.getText().split(" ");
         if (jTextField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "No ha ingresado nada");
         } else {
-            if(token[0].equals("./create")&& token[1].contains(".txt")&&token[2].equals("-single")){
+            if (token[0].equals("./create") && token[1].contains(".txt") && token[2].equals("-single")) {
                 try {
                     crearArchivo(jTextField1.getText());
                 } catch (IOException ex) {
                     Logger.getLogger(supermercado.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "Comnado no valido");
+            } else if (jTextField1.getText().equals("./clear")) {
+                clear();
+            } else {
+                JOptionPane.showMessageDialog(null, "Comando no valido");
             }
+
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -216,34 +223,44 @@ public class supermercado extends javax.swing.JFrame {
     public void crearArchivo(String comando) throws IOException {
         String[] token = comando.split(" ");
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        DefaultTreeModel modeloa = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloa.getRoot();
         FileWriter fw = null;
         BufferedWriter bw = null;
-        if (jTextField1.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese el comando para la creacion de archivos");
+        File archivo = new File(token[1]);
+        fw = new FileWriter("./" + archivo, false);
+        bw = new BufferedWriter(fw);
+        for (int i = 0; i < modelo.getRowCount(); i++) {
 
-        } else {
-            fw = new FileWriter("./"+token[1],false);
-            bw = new BufferedWriter(fw);
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                
-                if (modelo.getValueAt(i, 0)!=null) {
-                    bw.write(modelo.getValueAt(i, 0) + ",");
-                    bw.write(modelo.getValueAt(i, 1) + ",");
-                    bw.write(modelo.getValueAt(i, 3) + ",");
-                    bw.write(modelo.getValueAt(i, 4) + ",");
-                    bw.write(modelo.getValueAt(i, 5) + "\n");
-                } else {
-                    break; 
-                }
+            if (modelo.getValueAt(i, 0) != null) {
+                bw.write(modelo.getValueAt(i, 0) + ",");
+                bw.write(modelo.getValueAt(i, 1) + ",");
+                bw.write(modelo.getValueAt(i, 3) + ",");
+                bw.write(modelo.getValueAt(i, 4) + ",");
+                bw.write(modelo.getValueAt(i, 5) + "\n");
+            } else {
+                break;
             }
-            bw.flush();
-            bw.close();
-            fw.close();
         }
-
+        bw.flush();
+        bw.close();
+        fw.close();
+        root.add(new DefaultMutableTreeNode(archivo));
+        modeloa.reload();
     }
 
-    File archivo;
+    public void clear() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        Object[]temp={null," ",null,null,null,null};
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(0);
+            modelo.addRow(temp);
+        }
+        jTable1.setModel(modelo);
+    }
+    
+   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu File;
     private javax.swing.JMenu Help;
