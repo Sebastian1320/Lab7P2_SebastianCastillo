@@ -230,9 +230,10 @@ public class supermercado extends javax.swing.JFrame {
             if (modelo.getValueAt(i, 0) != null) {
                 bw.write(modelo.getValueAt(i, 0) + ",");
                 bw.write(modelo.getValueAt(i, 1) + ",");
+                bw.write(modelo.getValueAt(i, 2) + ",");
                 bw.write(modelo.getValueAt(i, 3) + ",");
                 bw.write(modelo.getValueAt(i, 4) + ",");
-                bw.write(modelo.getValueAt(i, 5) + ",");
+                 bw.write(modelo.getValueAt(i, 5) + ",");
             } else {
                 break;
             }
