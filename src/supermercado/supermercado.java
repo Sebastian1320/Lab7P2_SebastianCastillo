@@ -42,7 +42,7 @@ public class supermercado extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -57,18 +57,18 @@ public class supermercado extends javax.swing.JFrame {
         Window = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         Help = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        jMenu1.setText("Clear");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem8.setText("Clear");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                jMenuItem8ActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jMenu1);
+        jPopupMenu1.add(jMenuItem8);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,19 +188,24 @@ public class supermercado extends javax.swing.JFrame {
         jMenuItem4.setText("Refresh Tree");
         Window.add(jMenuItem4);
 
-        jMenu2.setText("Clear cmd");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem7.setText("Clear cmd");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                jMenuItem7ActionPerformed(evt);
             }
         });
-        Window.add(jMenu2);
+        Window.add(jMenuItem7);
 
         jMenuBar1.add(Window);
 
         Help.setText("Help");
 
         jMenuItem5.setText("Product Structure");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         Help.add(jMenuItem5);
 
         jMenuItem6.setText("Commands");
@@ -279,13 +284,17 @@ public class supermercado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-       clear();
-    }//GEN-LAST:event_jMenu1ActionPerformed
-
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         jTextField1.setText("");
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+       clear();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JOptionPane.showMessageDialog(null, "El producto consta de un id que es el numero de identificacion+\n Tiene un nombre+\n+Tiene el precio que es el valor a pagar por el producto+\n El bin que es un indicador de donde se guarda el producto+\nEl aisle que es el numero de pasillo donde se guarda el producto+\nY una categoria que es cual es el tipo del producto");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,8 +400,6 @@ public void refresh(){
     private javax.swing.JMenu Help;
     private javax.swing.JMenu Window;
     private javax.swing.JButton jButton1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -400,6 +407,8 @@ public void refresh(){
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
