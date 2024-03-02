@@ -43,6 +43,9 @@ public class supermercado extends javax.swing.JFrame {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        LoadFile = new javax.swing.JMenuItem();
+        Refresh = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -69,6 +72,12 @@ public class supermercado extends javax.swing.JFrame {
             }
         });
         jPopupMenu1.add(jMenuItem8);
+
+        LoadFile.setText("jMenuItem9");
+        jPopupMenu2.add(LoadFile);
+
+        Refresh.setText("jMenuItem10");
+        jPopupMenu2.add(Refresh);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +160,11 @@ public class supermercado extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Archivos CSV");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTree1);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 83, 190, 450));
@@ -248,8 +262,10 @@ public class supermercado extends javax.swing.JFrame {
             } else if (jTextField1.getText().equals("./clear")) {
                 clear();
             } else if (token[0].equals("./load") && token[1].contains(".txt")) {
-                load("./"+token[1]);
-            } else {
+                load("./Create/"+token[1]);
+            }else if(jTextField1.getText().equals("./refresh")){
+                refresh();
+            }else {
                 JOptionPane.showMessageDialog(null, "Comando no valido");
             }
 
@@ -296,6 +312,12 @@ public class supermercado extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "El producto consta de un id que es el numero de identificacion+\n Tiene un nombre+\n+Tiene el precio que es el valor a pagar por el producto+\n El bin que es un indicador de donde se guarda el producto+\nEl aisle que es el numero de pasillo donde se guarda el producto+\nY una categoria que es cual es el tipo del producto");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+        if(evt.getButton()==3){
+            jPopupMenu2.show(this,evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTree1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -339,7 +361,7 @@ public class supermercado extends javax.swing.JFrame {
         FileWriter fw = null;
         BufferedWriter bw = null;
         File archivo = new File(token[1]);
-        fw = new FileWriter("./" + archivo, false);
+        fw = new FileWriter("./Create/" + archivo, false);
         bw = new BufferedWriter(fw);
         for (int i = 0; i < modelo.getRowCount(); i++) {
 
@@ -393,11 +415,31 @@ public class supermercado extends javax.swing.JFrame {
     }
 
 public void refresh(){
-    File archivo =new File("");
+    
+    File archivo =new File("./Create");
+    DefaultTreeModel modelo=( DefaultTreeModel )jTree1.getModel();
+    DefaultMutableTreeNode raiz=(  DefaultMutableTreeNode)modelo.getRoot();
+    llenararbol(archivo, raiz);
+    modelo.reload();
+    
+    jTree1.setModel(modelo);
+}
+public void llenararbol(File f,DefaultMutableTreeNode raiz){
+    try {
+        for (File fil : f.listFiles()) {
+            if(fil.isFile()){
+                DefaultMutableTreeNode a=new DefaultMutableTreeNode (fil.getName());
+                raiz.add(a);
+            }
+        }
+    } catch (Exception e) {
+    }
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu File;
     private javax.swing.JMenu Help;
+    private javax.swing.JMenuItem LoadFile;
+    private javax.swing.JMenuItem Refresh;
     private javax.swing.JMenu Window;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -411,6 +453,7 @@ public void refresh(){
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
