@@ -419,6 +419,7 @@ public void refresh(){
     File archivo =new File("./Create");
     DefaultTreeModel modelo=( DefaultTreeModel )jTree1.getModel();
     DefaultMutableTreeNode raiz=(  DefaultMutableTreeNode)modelo.getRoot();
+    raiz.removeAllChildren();
     llenararbol(archivo, raiz);
     modelo.reload();
     
