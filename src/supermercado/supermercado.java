@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -121,15 +122,7 @@ public class supermercado extends javax.swing.JFrame {
             new String [] {
                 "Id", "Name", "Category", "Price", "Aisle", "Bin"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 720, 490));
@@ -178,6 +171,8 @@ public class supermercado extends javax.swing.JFrame {
                 }
             } else if (jTextField1.getText().equals("./clear")) {
                 clear();
+            } else if (token[0].equals("./load") && token[1].contains(".txt")) {
+                load("./"+token[1]);
             } else {
                 JOptionPane.showMessageDialog(null, "Comando no valido");
             }
@@ -237,7 +232,7 @@ public class supermercado extends javax.swing.JFrame {
                 bw.write(modelo.getValueAt(i, 1) + ",");
                 bw.write(modelo.getValueAt(i, 3) + ",");
                 bw.write(modelo.getValueAt(i, 4) + ",");
-                bw.write(modelo.getValueAt(i, 5) + "\n");
+                bw.write(modelo.getValueAt(i, 5) + ",");
             } else {
                 break;
             }
@@ -251,15 +246,35 @@ public class supermercado extends javax.swing.JFrame {
 
     public void clear() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        Object[]temp={null," ",null,null,null,null};
+        Object[] temp = {null, " ", null, null, null, null};
         for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(0);
             modelo.addRow(temp);
         }
         jTable1.setModel(modelo);
     }
-    
-   
+
+    public void load(String path) {
+      File Archivo =new File(path);
+      Scanner sc=null;
+      DefaultTableModel modelo=(DefaultTableModel) jTable1.getModel();
+      modelo.setRowCount(0);
+      if(Archivo.exists()){
+          try {
+              sc=new Scanner(Archivo);
+              while (sc.hasNextLine()) {
+                  String temp=sc.nextLine();
+                  Object []listar=temp.split(",");
+                  modelo.addRow(listar);
+              }
+              jTable1.setModel(modelo);
+          } catch (Exception e) {
+          }
+      }else{
+          JOptionPane.showMessageDialog(null, "No existe");
+      }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu File;
